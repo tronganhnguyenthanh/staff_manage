@@ -1,0 +1,24 @@
+{
+  "name":"server",
+  "version":"1.0.0",
+  "description":"My staff management",
+  "main":"server.js",
+  "scripts":{
+    "test":"No test",
+    "server":"nodemon server.js"
+  },
+  "keywords":[
+    "MERN",
+    "CRUD",
+    "API"
+  ],
+  "author":"Trong Anh",
+  "license":"ISC",
+  "dependencies":{
+    "cors":"^2.8.5",
+    "dotenv":"^16.0.3",
+    "express":"^4.18.1",
+    "mongoose":"^6.6.4",
+    "nodemon":"^2.0.20"
+  }
+}
