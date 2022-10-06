@@ -12,7 +12,7 @@ const StaffSchema = new mongoose.Schema({
   phoneNumber:{
    type:String
   },
-  major:{
+  address:{
    type:String
   }
 },{
