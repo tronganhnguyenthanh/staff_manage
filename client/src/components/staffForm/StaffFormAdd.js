@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Label, TextInput, Button} from "flowbite-react"
 import {ToastContainer, toast} from "react-toastify"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {addStaff} from "../../features/StaffInfoSlice"
 import {useNavigate} from "react-router-dom"
 const StaffFormAdd = () => {
@@ -13,8 +13,9 @@ const StaffFormAdd = () => {
     address:""
   }
   const [data, setData] = useState(init_data)
-  const navigate = useNavigate()
+  const edit = useSelector(state => state.staff.staff)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleOnChange = (e) => {
     let new_data = {...data}
     new_data[e.target.name] = e.target.value
@@ -42,10 +43,7 @@ const StaffFormAdd = () => {
      return false
     }else{
       dispatch(addStaff(data))
-      toast.success("Staff added successfully", {position:"top-center"})
-      setTimeout(() => {
-       navigate("/staff/list")
-      },3000)
+      navigate("/staff/list")
       return true
     }
   }
@@ -62,7 +60,7 @@ const StaffFormAdd = () => {
          <TextInput 
            placeholder="Enter your firstname"
            name="firstName"
-           value={data?.firstName}
+           value={edit ? data?.firstName : ""}
            onChange={handleOnChange}
          />
        </div>
@@ -73,7 +71,7 @@ const StaffFormAdd = () => {
          <TextInput 
            placeholder="Enter your lastname"
            name="lastName"
-           value={data?.lastName}
+           value={edit ? data?.lastName : ""}
            onChange={handleOnChange}  
          />
        </div>
@@ -84,7 +82,7 @@ const StaffFormAdd = () => {
          <TextInput 
            placeholder="Enter your email"
            name="email"
-           value={data?.email}
+           value={edit ? data?.email : ""}
            onChange={handleOnChange}
          />
        </div>
@@ -95,7 +93,7 @@ const StaffFormAdd = () => {
          <TextInput 
            placeholder="Enter your phone number"
            name="phoneNumber"
-           value={data?.phoneNumber}
+           value={edit ? data?.phoneNumber : ""}
            onChange={handleOnChange}
          />
        </div>
@@ -106,7 +104,7 @@ const StaffFormAdd = () => {
          <TextInput 
            placeholder="Enter your address"
            name="address"
-           value={data?.address}
+           value={edit ? data?.address : ""}
            onChange={handleOnChange}
          />
        </div>

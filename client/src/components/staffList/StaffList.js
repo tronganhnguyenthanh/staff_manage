@@ -1,18 +1,15 @@
-import React, {useEffect, useRef} from "react"
-import {Button, Card, Modal, TextInput} from "flowbite-react"
+import React, {useEffect} from "react"
+import {Button, Card, Modal} from "flowbite-react"
 import {useDispatch, useSelector} from "react-redux"
-import {deleteStaffById, getListStaff, onSearchStaffFilter, toggleModal} from "../../features/StaffInfoSlice"
+import {deleteStaffById, getListStaff, toggleModal} from "../../features/StaffInfoSlice"
 import {toast, ToastContainer} from "react-toastify"
 import {useNavigate} from "react-router-dom"
+import StaffFormSearch from "../staffForm/StaffFormSearch"
 const StaffList = () => {
   const staff = useSelector(state => state.staff.staff)
   const toggle = useSelector(state => state.staff.modal)
   const navigate = useNavigate()
-  const inputRef = useRef()
   const dispatch = useDispatch()
-  useEffect(() => {
-   dispatch(getListStaff())
-  },[dispatch])
   const handleConfirmStaffDelete = () => {
    dispatch(toggleModal())
   }
@@ -21,21 +18,14 @@ const StaffList = () => {
    toast.success("Staff deleted successfully", {position:"top-center"})
    dispatch(getListStaff())
   }
-  const handleSearchStaff = () => {
-   dispatch(onSearchStaffFilter(inputRef.current.value))
-  }
+  useEffect(() => {
+   dispatch(getListStaff())
+  },[dispatch])
   return (
     <>
-     <ToastContainer/>
-     <div className="container mx-auto p-2">
-       <TextInput
-         placeholder="Search staff"
-         ref={inputRef}
-         onKeyUp={handleSearchStaff}
-       />
-     </div>
+     <StaffFormSearch/>
      <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 container mx-auto p-2">
-      {staff.length > 0 && staff.map((i, index) => {
+       {staff?.length > 0 && staff?.map((i, index) => {
         return(
          <div key={index}>
           <Card>
@@ -46,9 +36,10 @@ const StaffList = () => {
            <p className="text-center first-letter:capitalize">address: <span className="font-bold text-blue-600">{i?.address}</span></p>
            <div className="flex gap-2 justify-center">
             <Button>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-              </svg>
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
+                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                 <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+               </svg>
             </Button>
             <Button color="failure" onClick={handleConfirmStaffDelete}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
@@ -74,9 +65,10 @@ const StaffList = () => {
           </Modal>
          </div>
         )
-      })
+       })
       }  
      </div>
+     <ToastContainer/>
     </>
   )
 }

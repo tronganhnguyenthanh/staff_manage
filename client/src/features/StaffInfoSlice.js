@@ -21,44 +21,65 @@ export const deleteStaffById = createAsyncThunk(
   return res?.data
  }
 )
+export const editStaffById = createAsyncThunk(
+ "staff/editStaffById",
+ async (_id) => {
+  const res = await axios.get(`http://localhost:8080/api/staff/edit/${_id}`)
+  return res?.data
+ }
+)
+export const updateStaff = createAsyncThunk(
+ "staff/updateStaff",
+ async (_id) => {
+  const res = await axios.put(`http://localhost:8080/api/staff/update/${_id}`)
+  return res?.data
+ }
+)
 const StaffInfoSlice = createSlice({
   name:"staff",
   initialState:{
    staff:[],
-   loading:false,
-   modal:false
+   modal:false,
+   edit:true
   },
   reducers:{
    toggleModal:(state) => {
     state.modal = !state.modal
    },
-   onSearchStaffFilter:(state, action) => {
-    state.staff = state.staff.filter(s => s.firstName.includes(action.payload))
+   onSearchStaffFilter:(state,{payload}) => {
+    state.staff = payload
    }
   },
   extraReducers:{
-   [addStaff.fulfilled]:(state, action) => {
-     state.staff = action.payload
+   [addStaff.fulfilled]:(state,{payload}) => {
+     state.staff = payload
    },
-   [addStaff.rejected]:(state, action) => {
-     state.staff = action.error
+   [addStaff.rejected]:(state, error) => {
+     state.staff = error
    },
-   [getListStaff.pending]:(state) => {
-     state.loading = false
+   [getListStaff.fulfilled]:(state,{payload}) => {
+     state.staff = payload
    },
-   [getListStaff.fulfilled]:(state, action) => {
-     state.loading = true
-     state.staff = action.payload
+   [getListStaff.rejected]:(state, error) => {
+     state.staff = error
    },
-   [getListStaff.rejected]:(state, action) => {
-     state.staff = action.error
-     state.loading = false
+   [deleteStaffById.fulfilled]:(state,{payload}) => {
+     state.staff = payload
    },
-   [deleteStaffById.fulfilled]:(state, action) => {
-     state.staff = action.payload
+   [deleteStaffById.rejected]:(state, error) => {
+     state.staff = error
    },
-   [deleteStaffById.rejected]:(state, action) => {
-     state.staff = action.error
+   [editStaffById.fulfilled]:(state, {payload}) => {
+     state.staff = payload
+   },
+   [editStaffById.rejected]:(state, error) => {
+     state.staff = error
+   },
+   [updateStaff.fulfilled]:(state, {payload}) => {
+     state.staff = payload
+   },
+   [updateStaff.rejected]:(state, error) => {
+     state.staff = error
    }
   }
 })

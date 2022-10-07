@@ -16,12 +16,21 @@ const getStaff = async (req, res) => {
     res.status(400).json({message:error})
   }
 }
+const editStaff = async (req, res) => {
+  try {
+    let _id = req.params.id
+    let editStaffById = await staffModel.findById(_id)
+    res.json(editStaffById)
+  }catch(error){
+    res.status(400).json({message:error})
+  }
+}
 const updateStaff = async (req, res) => {
   try {
     let _id = req.params.id
     let updated_data = req.body
-    let updated_status = {new:true}
-    let updated_staff = await staffModel.findByIdAndUpdate(_id, updated_data, updated_status)
+    let options = {new:true}
+    let updated_staff = await staffModel.findByIdAndUpdate(_id, updated_data, options)
     res.json(updated_staff)
   }catch (error) {
     res.status(400).json({message:error})
@@ -38,7 +47,8 @@ const deleteStaff = async (req, res) => {
 }
 module.exports = {
   addStaff, 
-  getStaff, 
+  getStaff,
+  editStaff, 
   updateStaff, 
   deleteStaff
 }
