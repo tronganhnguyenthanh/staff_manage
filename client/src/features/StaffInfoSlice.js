@@ -30,21 +30,24 @@ export const editStaffById = createAsyncThunk(
 )
 export const updateStaff = createAsyncThunk(
  "staff/updateStaff",
- async (_id) => {
-  const res = await axios.put(`http://localhost:8080/api/staff/update/${_id}`)
+ async (_id, options) => {
+  const res = await axios.put(`http://localhost:8080/api/staff/update/${_id}`, options)
   return res?.data
  }
 )
 const StaffInfoSlice = createSlice({
   name:"staff",
   initialState:{
-   staff:[],
-   modal:false,
-   edit:true
+    staff:[],
+    modal:false,
+    view:false
   },
   reducers:{
    toggleModal:(state) => {
     state.modal = !state.modal
+   },
+   toggleView:(state) => {
+    state.view = !state.view
    },
    onSearchStaffFilter:(state,{payload}) => {
     state.staff = payload
@@ -83,6 +86,6 @@ const StaffInfoSlice = createSlice({
    }
   }
 })
-export const {toggleModal, onSearchStaffFilter} = StaffInfoSlice.actions
+export const {toggleModal, onSearchStaffFilter, toggleView} = StaffInfoSlice.actions
 const StaffInfoReducer = StaffInfoSlice.reducer
 export default StaffInfoReducer
