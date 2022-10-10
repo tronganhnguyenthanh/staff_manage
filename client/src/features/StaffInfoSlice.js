@@ -3,28 +3,28 @@ import axios from "axios"
 export const addStaff = createAsyncThunk(
   "staff/addStaff",
   async (options) => {
-   const res = await axios.post("http://localhost:8080/api/staff/add", options)
+   const res = await axios.post("https://staff-manage-api.herokuapp.com/api/staff/add", options)
    return res?.data
   }
 )
 export const getListStaff = createAsyncThunk(
  "staff/getListStaff",
   async () => {
-   const res = await axios.get("http://localhost:8080/api/staff/list")
+   const res = await axios.get("https://staff-manage-api.herokuapp.com/api/staff/list")
    return res?.data
   }
 )
 export const deleteStaffById = createAsyncThunk(
  "staff/deleteStaffById",
  async (_id) => {
-  const res = await axios.delete(`http://localhost:8080/api/staff/delete/${_id}`)
+  const res = await axios.delete(`https://staff-manage-api.herokuapp.com/api/staff/delete/${_id}`)
   return res?.data
  }
 )
 export const editStaffById = createAsyncThunk(
  "staff/editStaffById",
  async (_id) => {
-  const res = await axios.get(`http://localhost:8080/api/staff/edit/${_id}`)
+  const res = await axios.get(`https://staff-manage-api.herokuapp.com/api/staff/edit/${_id}`)
   return res?.data
  }
 )
@@ -40,7 +40,8 @@ const StaffInfoSlice = createSlice({
   initialState:{
     staff:[],
     modal:false,
-    view:false
+    view:false,
+    loading:false
   },
   reducers:{
    toggleModal:(state) => {
@@ -55,19 +56,24 @@ const StaffInfoSlice = createSlice({
   },
   extraReducers:{
    [addStaff.fulfilled]:(state,{payload}) => {
-     state.staff = payload
+     state.staff.push(payload)
    },
    [addStaff.rejected]:(state, error) => {
      state.staff = error
    },
+   [getListStaff.pending]:(state) => {
+     state.loading = false
+   },
    [getListStaff.fulfilled]:(state,{payload}) => {
+     state.loading = true
      state.staff = payload
    },
    [getListStaff.rejected]:(state, error) => {
      state.staff = error
    },
    [deleteStaffById.fulfilled]:(state,{payload}) => {
-     state.staff = payload
+     state.staff = state.staff.filter(e => e._id !== payload._id)
+     state.modal = false
    },
    [deleteStaffById.rejected]:(state, error) => {
      state.staff = error

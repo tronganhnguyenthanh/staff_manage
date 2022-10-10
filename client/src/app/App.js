@@ -3,10 +3,9 @@ import {Route, Routes} from "react-router-dom"
 import SalaryFormAdd from "../components/salaryForm/SalaryFormAdd"
 import StaffForm from "../components/staffForm/StaffForm"
 import StaffFormAdd from "../components/staffForm/StaffFormAdd"
+import StaffList from "../components/staffList/StaffList"
 import "../css/style.css"
 import "react-toastify/dist/ReactToastify.css"
-import StaffList from "../components/staffList/StaffList"
-import StaffFormView from "../components/staffForm/StaffFormView"
 const App = () => {
   return (
    <div className="App">
@@ -14,7 +13,6 @@ const App = () => {
       <Route path="/" element={<StaffForm/>}/>
       <Route path="/staff/add"  element={<StaffFormAdd/>}/>
       <Route path="/staff/list" element={<StaffList/>}/>
-      <Route path="/staff/view/:_id" element={<StaffFormView/>}/>
       <Route path="/salary/add" element={<SalaryFormAdd/>}/>
     </Routes>
    </div>

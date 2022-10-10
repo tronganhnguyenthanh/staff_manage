@@ -5,7 +5,7 @@ import {editStaffById} from "../../features/StaffInfoSlice"
 const StaffFormView = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
-   if(props.data.id){
+   if(props?.data?.id){
     dispatch(editStaffById(props?.data?._id))
    }
   },[props?.data?._id])
@@ -14,7 +14,7 @@ const StaffFormView = (props) => {
     <form className="flex flex-col gap-4 p-2">
      <h1 className="text-3xl first-letter:capitalize text-center text-blue-600">staff information detail</h1>
      <div className="container mx-auto grid gap-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2">
-       <div>
+       <div className="staff_info">
          <div className="mb-2 block">
            <Label value="Firstname"/>
          </div>
@@ -65,7 +65,7 @@ const StaffFormView = (props) => {
          <TextInput 
            placeholder="Enter your address"
            name="address"
-           value={props?.data?.phoneNumber}
+           value={props?.data?.address}
            disabled
          />
        </div>

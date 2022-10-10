@@ -2,7 +2,7 @@ import React from "react"
 import {Link} from "react-router-dom"
 const StaffForm = () => {
   return (
-   <div className="container mx-auto py-64">
+   <div className="container mx-auto py-64 responsive-iphone">
      <div>
       <Link 
         to="/staff/add" 

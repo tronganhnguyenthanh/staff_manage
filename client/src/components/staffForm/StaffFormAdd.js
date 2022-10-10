@@ -49,7 +49,7 @@ const StaffFormAdd = () => {
   return(
    <>
     <ToastContainer/>
-    <form className="flex flex-col gap-4 p-2 py-64">
+    <form className="flex flex-col gap-4 p-2 py-64 responsive-iphone-padding">
      <h1 className="text-3xl first-letter:capitalize text-center text-blue-600">staff information form</h1>
      <div className="container mx-auto grid gap-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2">
        <div>

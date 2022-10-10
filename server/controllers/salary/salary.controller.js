@@ -36,9 +36,19 @@ const deleteSalary = async (req, res) => {
     res.status(400).json({message:error})
   }
 }
+const getSalaryById = async (req, res) => {
+   try {
+     let _id = req.params.id
+     let show_salary_by_id = await salaryModel.findById(_id)
+     res.json(show_salary_by_id) 
+   }catch (error) {
+     res.status(400).json({message:error})
+  }
+}
 module.exports = {
   addSalary,
   getSalary,
+  getSalaryById,
   updateSalary,
   deleteSalary
 }
