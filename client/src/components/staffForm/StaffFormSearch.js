@@ -11,7 +11,7 @@ const StaffFormSearch = () => {
     dispatch(onSearchStaffFilter(result))
   }
   useEffect(() => {
-    if(filter?.length === 0){
+    if(filter?.length === 0 || staff?.length > filter?.length){
      setFilter(staff)
     }
    },[staff, filter?.length])
